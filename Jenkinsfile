@@ -12,9 +12,10 @@ pipeline {
             steps {
                 bat 'python -m venv venv'  // Create a virtual environment
                 bat 'venv\\Scripts\\activate'  // Activate virtual environment (Windows)
-                bat 'pip install -r requirements.txt'  // Install dependencies
+                bat 'C:\\Python39\\Scripts\\pip install -r requirements.txt'  // Install dependencies
             }
         }
+        
 
         stage('Run Unit Tests') {
             steps {
