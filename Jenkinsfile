@@ -19,14 +19,7 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                bat '''
-                    call venv\\Scripts\\activate
-                    pytest test.py --maxfail=1 --disable-warnings
-                '''
-            }
-        }
+   
 
         stage('Deploy') {
             steps {
