@@ -1,5 +1,5 @@
 from calculator import Calculator
 
-
 def test_add():
-    assert Calculator.add(10, 20) == 30
+    calculator = calculator()
+    assert calculator.add(10, 20) == 30
