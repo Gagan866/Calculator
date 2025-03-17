@@ -1,32 +1,50 @@
 pipeline {
-    agent any  // Run on any available Jenkins agent
+    agent any
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Gagan866/Calculator.git'
+                git url: 'https://github.com/Gagan866/Calculator.git', branch: 'main'
             }
         }
 
-        stage('Set up Python Environment') {
+        stage('Install Dependencies') {
             steps {
-                bat 'python -m venv venv'  // Create a virtual environment
-                bat 'venv\\Scripts\\activate'  // Activate virtual environment (Windows)
-                bat 'C:\\Python39\\Scripts\\pip install -r requirements.txt'  // Install dependencies
+                bat '''
+                    python -m venv venv
+                    call venv\\Scripts\\activate
+                    python -m pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
-        
 
-        stage('Run Unit Tests') {
+        stage('Run Tests') {
             steps {
-                bat 'python -m unittest test_calculator.py'  // Run tests
+                bat '''
+                    call venv\\Scripts\\activate
+                    pytest test.py --maxfail=1 --disable-warnings
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying Application...'
+                bat '''
+                    call venv\\Scripts\\activate
+                    python calculator.py
+                '''
             }
         }
     }
 
     post {
-        always {
-            echo 'Pipeline execution completed!'
+        success {
+            echo '✅ Pipeline Succeeded!'
+        }
+        failure {
+            echo '❌ Pipeline Failed!'
         }
     }
 }
