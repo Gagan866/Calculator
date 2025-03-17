@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/Gagan866/Calculator.git', branch: 'main'
+                git url: 'https://github.com/Gagan866/Calculator1.git', branch: 'main'
             }
         }
 
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 bat '''
                     call venv\\Scripts\\activate
-                    pytest test.py --maxfail=1 --disable-warnings
+                    pytest test_cal.py --maxfail=1 --disable-warnings
                 '''
             }
         }
